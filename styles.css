@@ -57,6 +57,7 @@ header, main, footer {
   border-radius: 1em;
   background-color: #4F485AAA;
   backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
 }
 
 /* reset animation */
