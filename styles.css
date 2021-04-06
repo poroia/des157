@@ -29,12 +29,12 @@ svg {
 body {
   background-color: #2d2833;
   color: #aeaab5;
-  font-family: "Open Sans";
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
 }
 
 /* prettier-ignore */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Lexend";
+  font-family: "Lexend", Arial, Helvetica, sans-serif;
   font-weight: normal;
 }
 
@@ -140,6 +140,8 @@ header, main, footer {
 /*
  | HEADER
  */
+
+/* prettier-ignore */
 :root {
   --timeline-drawing-period: 1.5s;
   --timeline-normal-period: 2s; /* only first iter, otherwise draw + normal */
@@ -147,12 +149,8 @@ header, main, footer {
 
   --timeline-singing-delay: calc(1.5s + 2s); /* drawing + normal */
   --timeline-sound-delay: calc(1.5s + 2s + 0.2s); /* singing-delay + wait */
-  --timeline-sweat-delay: calc(
-    1.5s + 2s + 0.2s + 0.5s
-  ); /* sound-delay + wait */
-  --timeline-anger-delay: calc(
-    1.5s + 2s + 0.2s + 0.5s + 3s
-  ); /* sweat-delay + sweat */
+  --timeline-sweat-delay: calc(1.5s + 2s + 0.2s + 0.5s); /* sound-delay + wait */
+  --timeline-anger-delay: calc(1.5s + 2s + 0.2s + 0.5s + 3s); /* sweat-delay + sweat */
 }
 
 header {
