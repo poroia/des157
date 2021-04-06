@@ -1,6 +1,15 @@
 /*
  | DEFAULTS
  */
+:root {
+  --page-background-color: #2d2833;
+  --content-background-color: #4f485aaa;
+
+  --primary-color: #d3ff33b0;
+  --secondary-color: #8c74bc80;
+
+  --text-color: #aeaab5;
+}
 
 *,
 *::before,
@@ -18,8 +27,8 @@ svg {
 }
 
 body {
-  background-color: #2d2833;
-  color: #aeaab5;
+  background-color: var(--page-background-color);
+  color: var(--text-color);
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
 }
 
@@ -31,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* prettier-ignore */
 a:link, a:visited {
-  color: #aeaab5;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -46,10 +55,42 @@ header, main, footer {
   min-width: 900px;
 
   border-radius: 1em;
-  background-color: #4F485AAA;
+  background-color: var(--content-background-color);
   backdrop-filter: blur(2.5px);
   -webkit-backdrop-filter: blur(2.5px);
 }
+
+/*
+ * Scrollbar
+ */
+.scrollbar {
+  overflow: overlay;
+  scrollbar-color: red yellow;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 1em;
+}
+.scrollbar-small::-webkit-scrollbar {
+  width: 0.5em;
+}
+/* .scrollbar::-webkit-scrollbar-track-piece:start,
+.scrollbar::-webkit-scrollbar-track-piece:end {
+  background: transparent url("assets/utils/transparent.min.png") repeat !important;
+} */
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #9c9c9c80;
+  border-radius: 0.5em;
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #7c7c7c80;
+}
+.scrollbar::-webkit-scrollbar-thumb:active {
+  background-color: #5c5c5c80;
+}
+
+/*
+ * Animations
+ */
 
 /* reset animation */
 @keyframes reset {
@@ -156,7 +197,7 @@ header > *:not(#banner) {
 header h1 {
   left: 1.5rem;
   bottom: 0.5rem;
-  color: #d3ff33b0;
+  color: var(--primary-color);
 }
 
 header h2 {
@@ -410,7 +451,7 @@ header h3 {
   height: 150px;
   top: 20px;
   left: 60px;
-  color: #8c74bc80;
+  color: var(--secondary-color);
   transition: color 0.5s;
   animation: timeline-singing-bonger 0.5s var(--timeline-singing-delay) infinite;
 }
@@ -514,7 +555,7 @@ main section:not(:last-child) {
 }
 
 main h2 {
-  color: #d3ff33b0;
+  color: var(--primary-color);
 }
 
 main ul {
@@ -569,5 +610,5 @@ footer a {
   transition: color 0.2s;
 }
 footer a:hover {
-  color: #d3ff33b0;
+  color: var(--primary-color);
 }
