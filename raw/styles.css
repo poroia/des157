@@ -1,0 +1,572 @@
+/*
+ | DEFAULTS
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+body {
+  background-color: #2d2833;
+  color: #aeaab5;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+/* prettier-ignore */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lexend", Arial, sans-serif;
+  font-weight: normal;
+}
+
+/* prettier-ignore */
+a:link, a:visited {
+  color: #aeaab5;
+  text-decoration: none;
+}
+
+/*
+ | GENERAL
+ */
+
+/* prettier-ignore */
+header, main, footer {
+  margin: 2rem auto;
+  max-width: 960px;
+  min-width: 900px;
+
+  border-radius: 1em;
+  background-color: #4F485AAA;
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+}
+
+/* reset animation */
+@keyframes reset {
+  to {
+    height: auto;
+  }
+}
+
+@keyframes to-hidden {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes to-visible {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
+  }
+}
+
+/*
+ | BACKGROUND
+ */
+
+#body-background {
+  background-image: url("assets/bonger/tiled.min.svg");
+  background-position: 52px 52px;
+  background-size: 420px 420px;
+  opacity: 0.4;
+
+  position: fixed;
+  top: 0;
+  left: -100vmax;
+  width: 500vmax;
+  height: 400vmax;
+  z-index: -1;
+
+  animation: background-pan 666s linear infinite;
+}
+
+/* 
+ * - Cross points on a parallelogram like so in order of `a`
+ * - Calculate keyframe percentages based on distance travelled so 
+ *   speed is consistent
+ $$ let a = [1, 0]; b = [3, -3]; c = [4, 0]; d = [0, -3]; <- vectors
+ $$ let n = ||ab|| + ||bc|| + ||cd|| + ||da||; <- scalar length
+ */
+@keyframes background-pan {
+  0% {
+    top: 0;
+    left: -100vmax;
+  }
+
+  /* $$ ||ab|| / n */
+  24.15% {
+    top: -300vmax;
+    left: -300vmax;
+  }
+
+  /* $$ (||ab|| + ||bc||) / n */
+  45.33% {
+    top: 0vmax;
+    left: -400vmax;
+  }
+
+  /* $$ (||ab|| + ||bc|| + ||cd||) / n */
+  78.82% {
+    top: -300vmax;
+    left: 0;
+  }
+}
+
+/*
+ | HEADER
+ */
+/* prettier-ignore */
+:root {
+  --timeline-drawing-period: 1.5s;
+  --timeline-normal-period: 2s; /* only first iter, otherwise draw + normal */
+  --timeline-sweat-period: 3s;
+
+  --timeline-singing-delay: calc(1.5s + 2s); /* drawing + normal */
+  --timeline-sound-delay: calc(1.5s + 2s + 0.2s); /* singing-delay + wait */
+  --timeline-sweat-delay: calc(1.5s + 2s + 0.2s + 0.5s); /* sound-delay + wait */
+  --timeline-anger-delay: calc(1.5s + 2s + 0.2s + 0.5s + 3s); /* sweat-delay + sweat */
+}
+
+header {
+  position: relative;
+}
+
+header > *:not(#banner) {
+  position: absolute;
+  pointer-events: none;
+}
+
+header h1 {
+  left: 1.5rem;
+  bottom: 0.5rem;
+  color: #d3ff33b0;
+}
+
+header h2 {
+  right: 1.5rem;
+  bottom: 0.5rem;
+}
+
+header h3 {
+  top: 0.5rem;
+  right: 1.5rem;
+}
+
+/*
+ * Banner General
+ */
+
+#banner {
+  opacity: 0.69;
+  height: 250px;
+}
+
+#banner * {
+  position: absolute;
+}
+
+/* TODO animate sound off, make .timeline-timeline-singing wrapper and animate fade */
+#banner:hover .timeline-hover-reset {
+  /* animation-play-timeline: paused; */
+  animation-name: reset;
+}
+#banner:hover .timeline-hover-hidden {
+  /* animation: to-hidden 1s forwards; */
+  visibility: hidden;
+}
+
+/*
+ * Landscape
+ */
+
+#landscape .anger {
+  animation: timeline-landscape-anger 0.5s var(--timeline-anger-delay) infinite;
+}
+
+@keyframes timeline-landscape-anger {
+  50% {
+    transform: translate(5px);
+  }
+}
+
+/*
+ * Response
+ */
+#response {
+  width: 77px;
+  top: 25px;
+  right: 270px;
+}
+
+#response .reaction {
+  width: 50px;
+  height: 50px;
+  left: 8px;
+  top: 3px;
+}
+
+#response .jolly-wrapper {
+  transform: rotate(-7deg);
+  transform-origin: center center;
+  animation: timeline-response-jolly 1s var(--timeline-drawing-period)
+    step-start infinite;
+}
+
+#response .jolly {
+  animation: to-hidden 0s var(--timeline-sweat-delay) step-start forwards;
+}
+#response .sweat {
+  visibility: hidden;
+  animation: to-visible var(--timeline-sweat-period) var(--timeline-sweat-delay)
+    step-start;
+}
+#response .anger {
+  visibility: hidden;
+  transform-origin: center;
+  animation: to-visible 0s var(--timeline-anger-delay) step-start forwards,
+    timeline-response-anger 0.5s infinite;
+}
+
+#banner:hover #response .anger,
+#banner:hover .sweat {
+  visibility: hidden;
+}
+#banner:hover .jolly {
+  visibility: visible;
+}
+
+@keyframes timeline-response-jolly {
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes timeline-response-anger {
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/*
+ * Sound
+ */
+#sound {
+  width: 275px;
+  height: 150px;
+  top: 20px;
+  left: 175px;
+}
+#sound .wind {
+  width: 150px;
+  right: 60px;
+  visibility: hidden;
+  stroke-dasharray: 140;
+  animation-duration: 8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+#sound .wind1 {
+  stroke-dashoffset: 1400;
+  animation-name: timeline-singing-wind1;
+  animation-delay: calc(0.4s + var(--timeline-sound-delay));
+}
+#sound .wind2 {
+  stroke-dashoffset: 1500;
+  animation-name: timeline-singing-wind2;
+  animation-delay: calc(0.6s + var(--timeline-sound-delay));
+}
+
+@keyframes timeline-singing-wind1 {
+  from {
+    visibility: visible;
+  }
+  to {
+    stroke-dashoffset: 0;
+    visibility: visible;
+  }
+}
+@keyframes timeline-singing-wind2 {
+  from {
+    visibility: visible;
+  }
+  to {
+    stroke-dashoffset: 100;
+    visibility: visible;
+  }
+}
+
+#sound .noise {
+  width: 42px;
+  visibility: hidden;
+  animation: timeline-singing-noise 0.7s var(--timeline-sound-delay) step-start
+    infinite;
+}
+#sound .noise1 {
+  top: 60px;
+  right: 180px;
+  animation-delay: calc(0.2s + var(--timeline-sound-delay));
+}
+#sound .noise2 {
+  top: 105px;
+  right: 160px;
+  transform: rotate(30deg);
+  animation-delay: calc(0.4s + var(--timeline-sound-delay));
+}
+#sound .noise3 {
+  top: 10px;
+  right: 145px;
+  transform: rotate(-20deg);
+  animation-delay: calc(0.6s + var(--timeline-sound-delay));
+}
+#sound .noise4 {
+  top: 20px;
+  right: 40px;
+  transform: rotate(-20deg);
+  animation-delay: calc(0.8s + var(--timeline-sound-delay));
+}
+#sound .noise5 {
+  top: 80px;
+  right: 40px;
+  transform: rotate(10deg);
+  animation-delay: calc(1s + var(--timeline-sound-delay));
+}
+
+@keyframes timeline-singing-noise {
+  50% {
+    visibility: visible;
+  }
+}
+
+#sound .note {
+  width: 50px;
+  top: 20px;
+  right: 185px;
+  visibility: hidden;
+  animation: timeline-singing-note 1s var(--timeline-sound-delay) step-start
+    infinite;
+}
+#sound .double-note {
+  width: 50px;
+  top: 50px;
+  right: 80px;
+  visibility: hidden;
+  animation: timeline-singing-double 1s calc(0.8s + var(--timeline-sound-delay))
+    step-start infinite;
+}
+
+@keyframes timeline-singing-note {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    transform: translate(10px, -10px);
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+@keyframes timeline-singing-double {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    transform: translate(10px, 0);
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+#landscape .behind-sound {
+  stroke-dashoffset: 333;
+  stroke-dasharray: 333;
+  opacity: 0;
+}
+
+/*
+ * Bonger
+ */
+
+#bonger {
+  width: 150px;
+  height: 150px;
+  top: 20px;
+  left: 60px;
+  color: #8c74bc80;
+  transition: color 0.5s;
+  animation: timeline-singing-bonger 0.5s var(--timeline-singing-delay) infinite;
+}
+
+@keyframes timeline-singing-bonger {
+  80% {
+    transform: scale(1.04);
+  }
+}
+
+#bonger .singing,
+#bonger .happy {
+  visibility: hidden;
+}
+
+/* animating */
+#bonger .normal {
+  animation: to-hidden 0s var(--timeline-singing-delay) forwards;
+}
+
+#bonger .singing {
+  animation: to-visible 0s var(--timeline-singing-delay) forwards;
+}
+
+#bonger .mic {
+  width: 50px;
+  top: 13px;
+  right: -23px;
+  visibility: hidden;
+  animation: to-visible 0s var(--timeline-singing-delay) step-start forwards;
+}
+
+/* hover */
+#banner:hover #bonger {
+  color: #bd75a080;
+}
+#banner:hover .singing {
+  visibility: hidden;
+}
+#banner:hover .happy {
+  visibility: visible;
+}
+
+/*
+ * General animation
+ */
+
+/* drawing */
+.draw-stroked-large {
+  stroke-dasharray: 1069;
+  stroke-dashoffset: 1069;
+}
+.draw-stroked-medium {
+  stroke-dasharray: 333;
+  stroke-dashoffset: 333;
+}
+.draw-stroked-small {
+  stroke-dasharray: 99;
+  stroke-dashoffset: 99;
+}
+.draw-stroked {
+  animation: draw-stroke var(--timeline-drawing-period) linear forwards;
+}
+.draw-filled {
+  fill-opacity: 0;
+  animation: draw-fill 0.5s var(--timeline-drawing-period) linear forwards;
+}
+.draw-stroked.draw-filled {
+  animation: draw-fill 0.5s var(--timeline-drawing-period) linear forwards,
+    draw-stroke var(--timeline-drawing-period) linear forwards;
+}
+
+/* drawing lines */
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* filling shape after drawing */
+@keyframes draw-fill {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+/*
+ | MAIN
+ */
+
+main {
+  padding: 2em 0;
+  display: flex;
+}
+
+main section {
+  flex: 1;
+  padding: 0 3em;
+}
+main section:not(:last-child) {
+  border-right: 1px #696175aa solid;
+}
+
+main h2 {
+  color: #d3ff33b0;
+}
+
+main ul {
+  padding-left: 0.5em;
+  margin-bottom: 2em;
+}
+
+main li {
+  margin: 0.2em 0;
+  padding: 1em;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.1s;
+}
+main li:hover {
+  background-color: #696175aa;
+}
+main li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  bottom: 0;
+  width: 3rem;
+  transform: scale(0.4);
+
+  opacity: 0;
+  background-image: url("assets/icons/arrow-right.svg");
+  background-size: 1.2em;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: right 0.2s, opacity 0.2s, transform 0.2s;
+}
+main li:hover::after {
+  right: 0;
+  opacity: 1;
+  transform: initial;
+}
+
+/*
+ | FOOTER
+ */
+
+footer {
+  padding: 1em 16em;
+  display: flex;
+  justify-content: space-around;
+}
+
+footer a {
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #d3ff33b0;
+}
