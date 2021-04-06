@@ -571,7 +571,7 @@ main li:hover::after {
  */
 
 footer {
-  padding: 1em 20em;
+  padding: 1em 16em;
   display: flex;
   justify-content: space-around;
 }
