@@ -65,7 +65,6 @@ header, main, footer {
  */
 .scrollbar {
   overflow: overlay;
-  scrollbar-color: red yellow;
 }
 .scrollbar::-webkit-scrollbar {
   width: 1em;
