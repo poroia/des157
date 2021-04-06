@@ -63,9 +63,9 @@ header, main, footer {
 /*
  * Scrollbar
  */
-.scrollbar {
+/* .scrollbar {
   overflow: overlay;
-}
+} */
 .scrollbar::-webkit-scrollbar {
   width: 1em;
 }
