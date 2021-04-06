@@ -1,15 +1,6 @@
 /*
  | DEFAULTS
  */
-@font-face {
-  font-family: "Lexend";
-  src: url("assets/fonts/Lexend-Light.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Open Sans";
-  src: url("assets/fonts/OpenSans-Regular.ttf") format("truetype");
-}
 
 *,
 *::before,
